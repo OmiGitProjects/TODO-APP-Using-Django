@@ -9,7 +9,7 @@ def indexHome(request):
 
                 if len(taskName) < 5:
                         messages.warning(request, "Task Must Contain more Than 5 Character!!!")
-                        redirect('Homepage')
+                        return redirect('Homepage')
 
                 todo = TodoDatabase(task_name = taskName, slug=taskName)
                 todo.save()
@@ -18,7 +18,7 @@ def indexHome(request):
 
         todo = TodoDatabase.objects.all()[::-1]
 
-        context = {'todoData': todo}
+        context = {'todoData': todo, 'title':'TODO APP'}
         return render(request, 'tasks/index.html', context)
 
 def deleteTask(request, slug):
@@ -35,10 +35,11 @@ def editTask(request, slug):
 
                 todoUpdate = TodoDatabase.objects.get(slug=slug)
                 todoUpdate.task_name = updatedTask
+                todoUpdate.slug = slug
                 todoUpdate.save()
                 messages.success(request, "Task Has Been Successfully Updated!")
                 return redirect('Homepage')
 
-        params = {'task':todo}
+        params = {'task':todo, 'title':todo.slug}
 
         return render(request, 'tasks/editTask.html', params)
