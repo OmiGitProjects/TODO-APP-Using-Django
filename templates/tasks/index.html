@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if title %}
+<title>{{ title }}</title>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="box shadow7">
+        <h3 class="text-danger font-italic pt-4">Todo Web Application</h3>
+        <div class="container mt-3">
+                <form action="{% url 'Homepage' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="task" id="task" placeholder="Type Tasks!" class="form-control">
+                        <input type="submit" value="Add Task" class="btn btn-danger mt-2">
+                </form>
+
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-0 mt-2" role="alert">
+                        <strong>Message : </strong> {{ message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                {% if todoData|length < 1 %}
+                <h3 class="lead mt-2 mb-2 font-italic text-warning">Task Has Been Not Added in Your Database</h3>
+                {% else %}
+                <div class="table-responsive">
+                        <div class="row">
+                                <div class="col-sm">
+                                        <table class="table table-hover mt-3">
+                                                <thead class="thead-light">
+                                                        <tr>
+                                                                <th scope="col">Task_Names</th>
+                                                                <th scope="col">Added_On</th>
+                                                                <th scope="col">Methods</th>
+                                                        </tr>
+                                                </thead>
+                                                <tbody>
+                                                        {% for task in todoData %}
+                                                        <tr>
+                                                                <td data-label="Task_Name">{{ task.task_name }}</td>
+                                                                <td data-label="Added_On">{{task.timeStamp  }}</td>
+                                                                <td data-label="Methods">
+                                                                        <a href="/update/{{ task.slug }}" class="btn btn-outline-danger ml-2">Update</a>
+                                                                        <a href="/delete/{{ task.slug }}" class="btn btn-outline-danger ml-2">Delete</a>
+                                                                </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                </tbody>
+                                        </table>
+                                </div>
+                        </div>
+                </div>
+                {% endif %}
+        </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+<!-- {% load static %} -->
+
+{% block title %}
+{% if title %}
+<title>{{ title }}</title>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="box shadow7">
+        <h3 class="text-danger font-italic pt-4">Todo Web Application</h3>
+        <h3 class="lead h4">Edit Task of {{ task.task_name }}</h3>
+        <div class="container mt-3">
+                <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                                <input type="text" class="form-control" id="TaskInput"  value="{{ task.task_name }}" name="updateTask">
+                        </div>
+                        <button type="submit" class="btn btn-outline-danger">Update Task</button>
+                </form>
+        </div>
+</div>
+{% endblock content %}
