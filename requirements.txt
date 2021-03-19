@@ -33,7 +33,7 @@ lazy-object-proxy==1.4.3
 lxml==4.5.0
 mccabe==0.6.1
 parsel==1.5.2
-Pillow==6.2.1
+Pillow==8.1.1
 pipenv==2018.11.26
 Protego==0.1.16
 proxyscrape==0.3.0
